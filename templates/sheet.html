@@ -1,0 +1,84 @@
+{{!-- sheet.html v2 --}}
+<form class="tcs-sheet" autocomplete="off" name="tcs-actor-form">
+
+  {{!-- ── 헤더 ── --}}
+  <header class="tcs-header">
+    <div class="tcs-portrait">
+      {{#if actor.img}}
+        <img src="{{actor.img}}" alt="초상화" data-edit="img" title="클릭하여 변경">
+      {{else}}
+        <div class="tcs-portrait-placeholder"><i class="fa fa-user"></i></div>
+      {{/if}}
+    </div>
+    <div class="tcs-header-info">
+      <div class="tcs-header-top">
+        <input class="tcs-name-input" type="text" name="name" value="{{actor.name}}" placeholder="여행자 이름" {{#unless editable}}disabled{{/unless}}>
+        <div class="tcs-upp-row">
+          {{#each chars as |char key|}}
+            <div class="tcs-char-box tcs-roll-char" data-cha="{{key}}" title="{{key}} 판정 굴림{{#if char.boon}} ({{char.boon}}){{/if}}">
+              <div class="tcs-char-key">{{key}}</div>
+              <input class="tcs-char-val-input" type="number" data-cha="{{key}}" data-aug="{{char.aug}}" data-dmg="{{char.dmg}}" value="{{char.val}}" {{#unless ../editable}}disabled{{/unless}}>
+              <div class="tcs-char-dm">{{char.dm}}</div>
+              <div class="tcs-char-ko">{{char.ko}}</div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+      <div class="tcs-header-bottom">
+        <span class="tcs-meta"><i class="fa fa-globe"></i> {{sophont.homeworld}}</span>
+        <span class="tcs-meta"><i class="fa fa-user"></i> {{sophont.species}}</span>
+        <span class="tcs-meta"><i class="fa fa-cake-candles"></i> {{sophont.age}}세</span>
+        <span class="tcs-meta"><i class="fa fa-briefcase"></i> {{terms}}주기</span>
+        <span class="tcs-meta tcs-gold"><i class="fa fa-coins"></i>
+          <input class="tcs-cash-input" type="text" value="{{finance.cash}}" {{#unless editable}}disabled{{/unless}}> Cr
+        </span>
+        {{#if finance.pension}}
+          <span class="tcs-meta tcs-cyan">연금 Cr {{finance.pension}}/년</span>
+        {{/if}}
+        <span class="tcs-meta"><i class="fa fa-heart" style="color:var(--tcs-red)"></i>
+          <span class="tcs-hits-current" style="color:var(--tcs-green);font-family:var(--tcs-font-mono);">{{hitsCurrent}}</span>
+          <span style="color:var(--tcs-muted);font-family:var(--tcs-font-mono);">/ {{hitsMax}}</span>
+        </span>
+        <span class="tcs-meta">소지 {{totalWeight}}kg</span>
+        {{#if armourPenalty}}
+        <span class="tcs-meta" style="color:var(--tcs-red)" title="요구 기능 부족 — 모든 판정에 적용">⚠ 장갑복 페널티 {{armourPenalty}}</span>
+        {{/if}}
+      </div>
+    </div>
+  </header>
+
+  {{!-- ── 탭 네비 ── --}}
+  <nav class="tcs-tabs">
+    <a class="tcs-tab item" data-tab="info"><i class="fa fa-id-card"></i> 정보</a>
+    <a class="tcs-tab item" data-tab="skills"><i class="fa fa-brain"></i> 기능 <span class="tcs-cnt">{{trainedSkills.length}}</span></a>
+    <a class="tcs-tab item" data-tab="equipment"><i class="fa fa-shield-halved"></i> 장비</a>
+    <a class="tcs-tab item" data-tab="shop">
+      <i class="fa fa-shop"></i> 상점
+      {{#unless shopAvailable}}<span class="tcs-warn" title="traveller-chargen-items 모듈 필요">!</span>{{/unless}}
+    </a>
+    <a class="tcs-tab item" data-tab="career"><i class="fa fa-briefcase"></i> 경력</a>
+    <a class="tcs-tab item" data-tab="backstory"><i class="fa fa-book"></i> 배경</a>
+  </nav>
+
+  <section class="tcs-body">
+    <div class="tab tcs-tab-content" data-tab="skills">
+      {{> "modules/traveller-chargen-sheet/templates/tabs/skills.html"}}
+    </div>
+    <div class="tab tcs-tab-content" data-tab="equipment">
+      {{> "modules/traveller-chargen-sheet/templates/tabs/equipment.html"}}
+    </div>
+    <div class="tab tcs-tab-content" data-tab="shop">
+      {{> "modules/traveller-chargen-sheet/templates/tabs/shop.html"}}
+    </div>
+    <div class="tab tcs-tab-content" data-tab="info">
+      {{> "modules/traveller-chargen-sheet/templates/tabs/info.html"}}
+    </div>
+    <div class="tab tcs-tab-content" data-tab="career">
+      {{> "modules/traveller-chargen-sheet/templates/tabs/career.html"}}
+    </div>
+    <div class="tab tcs-tab-content" data-tab="backstory">
+      {{> "modules/traveller-chargen-sheet/templates/tabs/backstory.html"}}
+    </div>
+  </section>
+
+</form>

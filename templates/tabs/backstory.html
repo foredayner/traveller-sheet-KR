@@ -1,0 +1,25 @@
+{{!-- tabs/backstory.html v1 --}}
+<div class="tcs-career-wrap">
+
+  <div class="tcs-card">
+    <div class="tcs-card-title">배경 / 설정 <span class="tcs-card-en">BACKGROUND</span></div>
+    <textarea class="tcs-input" name="system.finance.description" style="width:100%;min-height:160px;resize:vertical;font-family:var(--tcs-font-body);line-height:1.5;"
+      placeholder="출신, 성격, 외형, 신념, 말투, 목표 등 자유롭게 적어주세요."
+      {{#unless editable}}disabled{{/unless}}>{{system.finance.description}}</textarea>
+  </div>
+
+  <div class="tcs-card">
+    <div class="tcs-card-title">관계 / 인물 <span class="tcs-card-en">RELATIONSHIPS</span></div>
+    <textarea class="tcs-input tcs-backstory-relationships" style="width:100%;min-height:140px;resize:vertical;font-family:var(--tcs-font-body);line-height:1.5;"
+      placeholder="가족, 동료, 라이벌, 연인 등 캐릭터와 관계된 인물들을 적어주세요."
+      {{#unless editable}}disabled{{/unless}}>{{backstoryRelationships}}</textarea>
+  </div>
+
+  <div class="tcs-card">
+    <div class="tcs-card-title">기타 메모 <span class="tcs-card-en">NOTES</span></div>
+    <textarea class="tcs-input tcs-backstory-notes" style="width:100%;min-height:120px;resize:vertical;font-family:var(--tcs-font-body);line-height:1.5;"
+      placeholder="GM 메모, 비밀, 장기 목표 등."
+      {{#unless editable}}disabled{{/unless}}>{{backstoryNotes}}</textarea>
+  </div>
+
+</div>

@@ -1,0 +1,4 @@
+The Traveller game in all forms is owned by Mongoose Publishing. Copyright 1977-2024 Mongoose Publishing. Traveller is a registered trademark of Mongoose Publishing. Mongoose Publishing permits web sites and fanzines for this game, provided it contains this notice, that Mongoose Publishing is notified, and subject to a withdrawal of permission on 90 days notice. The contents of this site are for personal, non-commercial use only.
+
+이 모듈은 비상업적 팬 제작 콘텐츠입니다.
+제작: foredayner

@@ -1,0 +1,45 @@
+{
+  "id": "traveller-sheet-KR",
+  "title": "Traveller Sheet KR",
+  "description": "트래블러 한글 커스텀 캐릭터 시트. 상점 탭 포함. traveller-items-KR 모듈 필요.",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "foredayner",
+      "url": "https://github.com/foredayner"
+    }
+  ],
+  "compatibility": {
+    "minimum": "12",
+    "verified": "14",
+    "maximum": "14"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "mgt2e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "0.19"
+        }
+      }
+    ],
+    "requires": [
+      {
+        "id": "traveller-items-KR",
+        "type": "module"
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/hooks.js"
+  ],
+  "styles": [
+    "styles/sheet.css"
+  ],
+  "flags": {
+    "legal": "The Traveller game in all forms is owned by Mongoose Publishing. Copyright 1977-2024 Mongoose Publishing. Traveller is a registered trademark of Mongoose Publishing. Mongoose Publishing permits web sites and fanzines for this game, provided it contains this notice, that Mongoose Publishing is notified, and subject to a withdrawal of permission on 90 days notice. The contents of this site are for personal, non-commercial use only."
+  },
+  "url": "https://github.com/foredayner/traveller-sheet-KR",
+  "license": "Mongoose Fair Use"
+}

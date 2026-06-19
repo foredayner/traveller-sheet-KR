@@ -1,0 +1,302 @@
+<form class="{{cssClass}} tcs-sheet tcs-item-sheet" autocomplete="off">
+
+  <header class="tcs-header" style="margin-bottom:0.6rem;">
+    <div class="tcs-portrait" style="width:56px;height:56px;flex:none;">
+      <img class="profile-img" data-edit="img" src="{{item.img}}" title="{{item.name}}"
+        style="width:100%;height:100%;object-fit:cover;border-radius:var(--tcs-radius);cursor:pointer;border:1px solid var(--tcs-border);">
+    </div>
+    <div class="tcs-header-info" style="flex:1;">
+      <input class="tcs-name-input" type="text" name="name" value="{{item.name}}" {{#unless editable}}disabled{{/unless}}>
+      <div class="tcs-header-meta">
+        <span class="tcs-meta-item">
+          <span class="tcs-meta-label">유형</span>
+          <span class="tcs-meta-value">{{categoryLabel}}</span>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <div class="tcs-body" style="overflow:visible;max-height:none;">
+
+    {{!-- 기본 정보 --}}
+    <div class="tcs-card">
+      <div class="tcs-card-title">기본 정보</div>
+      <div class="tcs-info-grid">
+        <div class="tcs-bio-item">
+          <label class="tcs-label">기술 수준 (TL)</label>
+          <input class="tcs-input" type="number" name="system.tl" value="{{sys.tl}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">무게 (kg)</label>
+          <input class="tcs-input" type="number" step="0.1" name="system.weight" value="{{sys.weight}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">가격 (Cr)</label>
+          <input class="tcs-input" type="number" name="system.cost" value="{{sys.cost}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">수량</label>
+          <input class="tcs-input" type="number" name="system.quantity" value="{{sys.quantity}}" min="1" {{#unless editable}}disabled{{/unless}}>
+        </div>
+
+        {{#if isWeapon}}
+        <div class="tcs-bio-item">
+          <label class="tcs-label">법규 (Legality)</label>
+          <select class="tcs-input" name="system.legality" {{#unless editable}}disabled{{/unless}}>
+            {{selectOptions weaponLegality selected=sys.legality}}
+          </select>
+        </div>
+        {{/if}}
+        {{#if isArmour}}
+        <div class="tcs-bio-item">
+          <label class="tcs-label">법규 (Legality)</label>
+          <select class="tcs-input" name="system.legality" {{#unless editable}}disabled{{/unless}}>
+            {{selectOptions armourLegality selected=sys.legality}}
+          </select>
+        </div>
+        {{/if}}
+        {{#if isAugment}}
+        <div class="tcs-bio-item">
+          <label class="tcs-label">법규 (Legality)</label>
+          <input class="tcs-input" type="number" name="system.legality" value="{{sys.legality}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+
+    {{!-- 무기 --}}
+    {{#if isWeapon}}
+    <div class="tcs-card">
+      <div class="tcs-card-title">무기 특성 <span class="tcs-card-en">Weapon</span></div>
+      <div class="tcs-info-grid">
+        <div class="tcs-bio-item">
+          <label class="tcs-label">데미지</label>
+          <input class="tcs-input" type="text" name="system.weapon.damage" value="{{sys.weapon.damage}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">사거리 (m)</label>
+          <input class="tcs-input" type="number" name="system.weapon.range" value="{{sys.weapon.range}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">최소 사거리 (m)</label>
+          <input class="tcs-input" type="number" name="system.weapon.minRange" value="{{sys.weapon.minRange}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">탄창</label>
+          <input class="tcs-input" type="number" name="system.weapon.magazine" value="{{sys.weapon.magazine}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">남은 탄수</label>
+          <input class="tcs-input" type="number" name="system.weapon.ammo" value="{{sys.weapon.ammo}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">탄창 가격 (Cr)</label>
+          <input class="tcs-input" type="number" name="system.weapon.magazineCost" value="{{sys.weapon.magazineCost}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">사용 특성치</label>
+          <select class="tcs-input" name="system.weapon.characteristic" {{#unless editable}}disabled{{/unless}}>
+            {{selectOptions chaChoices selected=sys.weapon.characteristic}}
+          </select>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">데미지 종류</label>
+          <select class="tcs-input" name="system.weapon.damageType" {{#unless editable}}disabled{{/unless}}>
+            {{selectOptions dmgTypes selected=sys.weapon.damageType}}
+          </select>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">기능</label>
+          <input class="tcs-input" type="text" name="system.weapon.skill" value="{{sys.weapon.skill}}" {{#unless editable}}disabled{{/unless}}>
+          <span class="tcs-card-en" style="margin-left:0;">{{skillLabel}}</span>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">명중 보정 (DM)</label>
+          <input class="tcs-input" type="number" name="system.weapon.attackBonus" value="{{sys.weapon.attackBonus}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">데미지 보정</label>
+          <input class="tcs-input" type="text" name="system.weapon.damageBonus" value="{{sys.weapon.damageBonus}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">막기 보정 (근접)</label>
+          <input class="tcs-input" type="number" name="system.weapon.parryBonus" value="{{sys.weapon.parryBonus}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item" style="grid-column:1/-1;">
+          <label class="tcs-label">특성 (Traits)</label>
+          {{#if editable}}
+          <div class="tcs-traits-editor">
+            {{!-- 현재 태그 목록 --}}
+            <div class="tcs-traits-tags" id="tcs-traits-tags">
+              {{#each traitTags}}
+              <span class="tcs-trait-tag">{{this}}<button type="button" class="tcs-trait-remove" data-trait="{{this}}">✕</button></span>
+              {{/each}}
+            </div>
+            {{!-- 드롭다운 추가 --}}
+            <div class="tcs-traits-add-row">
+              <select class="tcs-input tcs-traits-select" style="flex:1;">
+                <option value="">— 특성 추가 —</option>
+                <optgroup label="연사">
+                  <option value="연사 2">연사 2</option>
+                  <option value="연사 3">연사 3</option>
+                  <option value="연사 4">연사 4</option>
+                  <option value="연사 6">연사 6</option>
+                </optgroup>
+                <optgroup label="자동">
+                  <option value="자동 2">자동 2</option>
+                  <option value="자동 3">자동 3</option>
+                  <option value="자동 4">자동 4</option>
+                </optgroup>
+                <optgroup label="장갑 관통">
+                  <option value="장갑관통_N" data-needs-num="1">장갑 관통 N (숫자 입력)</option>
+                </optgroup>
+                <optgroup label="폭발">
+                  <option value="폭발_N" data-needs-num="1">폭발 N (숫자 입력)</option>
+                </optgroup>
+                <optgroup label="기타">
+                  <option value="무거움">무거움</option>
+                  <option value="매우 무거움">매우 무거움</option>
+                  <option value="강타">강타</option>
+                  <option value="기절">기절</option>
+                  <option value="조준경">조준경</option>
+                  <option value="은밀">은밀</option>
+                  <option value="무중력">무중력</option>
+                  <option value="화염">화염</option>
+                  <option value="방사능">방사능</option>
+                  <option value="이온">이온</option>
+                  <option value="유도">유도</option>
+                  <option value="확산 3">확산 3</option>
+                  <option value="확산 4">확산 4</option>
+                  <option value="일회용">일회용</option>
+                  <option value="1회 사용">1회 사용</option>
+                  <option value="충격">충격</option>
+                  <option value="냉동">냉동</option>
+                  <option value="위험">위험</option>
+                  <option value="특수(초능력)">특수(초능력)</option>
+                  <option value="수중 사용 가능">수중 사용 가능</option>
+                </optgroup>
+                <optgroup label="커스텀">
+                  <option value="__custom">+ 직접 입력...</option>
+                </optgroup>
+              </select>
+              <input type="number" class="tcs-input tcs-traits-num" placeholder="값" min="1" style="width:60px;display:none;">
+              <input type="text" class="tcs-input tcs-traits-custom" placeholder="특성 이름" style="display:none;flex:1;">
+              <button type="button" class="tcs-btn tcs-traits-add-btn">추가</button>
+            </div>
+          </div>
+          {{else}}
+          <div class="tcs-traits-tags">
+            {{#each traitTags}}
+            <span class="tcs-trait-tag">{{this}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    {{!-- 방어구 --}}
+    {{#if isArmour}}
+    <div class="tcs-card">
+      <div class="tcs-card-title">방어구 특성 <span class="tcs-card-en">Armour</span></div>
+      <div class="tcs-info-grid">
+        <div class="tcs-bio-item">
+          <label class="tcs-label">방어</label>
+          <input class="tcs-input" type="number" name="system.armour.protection" value="{{sys.armour.protection}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">방사선 차단</label>
+          <input class="tcs-input" type="number" name="system.armour.rad" value="{{sys.armour.rad}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">에너지 (추가 방어)</label>
+          <input class="tcs-input" type="number" name="system.armour.otherProtection" value="{{sys.armour.otherProtection}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">에너지 종류</label>
+          <input class="tcs-input" type="text" name="system.armour.otherTypes" value="{{sys.armour.otherTypes}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">요구 기능</label>
+          <input class="tcs-input" type="text" name="system.armour.skill" value="{{sys.armour.skill}}" {{#unless editable}}disabled{{/unless}}>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">동력식</label>
+          <select class="tcs-input" name="system.armour.powered" {{#unless editable}}disabled{{/unless}}>
+            {{selectOptions yesno selected=sys.armour.powered}}
+          </select>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">초능력 차단</label>
+          <select class="tcs-input" name="system.armour.psi" {{#unless editable}}disabled{{/unless}}>
+            {{selectOptions yesno selected=sys.armour.psi}}
+          </select>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">소모식 (Ablative)</label>
+          <select class="tcs-input" name="system.armour.ablat" {{#unless editable}}disabled{{/unless}}>
+            {{selectOptions yesno selected=sys.armour.ablat}}
+          </select>
+        </div>
+        <div class="tcs-bio-item">
+          <label class="tcs-label">구식 (Archaic)</label>
+          <select class="tcs-input" name="system.armour.archaic" {{#unless editable}}disabled{{/unless}}>
+            {{selectOptions yesno selected=sys.armour.archaic}}
+          </select>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    {{!-- 강화장치: 신체 강화 선택 --}}
+    {{#if isChoiceAug}}
+    <div class="tcs-card">
+      <div class="tcs-card-title">⚙ 보너스 특성치 선택</div>
+      <div class="tcs-info-grid">
+        <div class="tcs-bio-item" style="grid-column:1/-1;">
+          <label class="tcs-label">+{{choiceVal}} 보너스를 부여할 특성치</label>
+          <select class="tcs-input tcs-aug-choice" {{#unless editable}}disabled{{/unless}}>
+            <option value="">— 선택 안 함 —</option>
+            {{selectOptions chaChoices selected=augChoice}}
+          </select>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    {{!-- 강화장치: 기능 강화 이식 - 기능 선택 --}}
+    {{#if isSkillChoiceAug}}
+    <div class="tcs-card">
+      <div class="tcs-card-title">⚙ 보너스 기능 선택</div>
+      <div class="tcs-info-grid">
+        <div class="tcs-bio-item" style="grid-column:1/-1;">
+          <label class="tcs-label">레벨 +{{skillChoiceVal}}을 부여할 기능</label>
+          <select class="tcs-input tcs-aug-choice-skill" {{#unless editable}}disabled{{/unless}}>
+            <option value="">— 선택 안 함 —</option>
+            {{selectOptions skillChoices selected=augChoiceSkill}}
+          </select>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    {{!-- 장착 시 적용 효과 미리보기 --}}
+    {{#if previewLines.length}}
+    <div class="tcs-card" style="border-color:var(--tcs-cyan);">
+      <div class="tcs-card-title" style="color:var(--tcs-cyan);">⚙ 장착(이식) 시 자동 적용 효과</div>
+      <ul style="margin:0;padding-left:1.1rem;font-size:0.8rem;line-height:1.5;">
+        {{#each previewLines}}<li>{{this}}</li>{{/each}}
+      </ul>
+    </div>
+    {{/if}}
+
+    {{!-- 설명 / 특성 --}}
+    <div class="tcs-card">
+      <div class="tcs-card-title">설명 / 특성</div>
+      <textarea class="tcs-input" name="system.notes" style="width:100%;min-height:90px;resize:vertical;font-family:var(--tcs-font-body);"
+        {{#unless editable}}disabled{{/unless}}>{{sys.notes}}</textarea>
+    </div>
+
+  </div>
+</form>

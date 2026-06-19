@@ -1,0 +1,65 @@
+{{!-- tabs/skills.html v4 — 레벨 인라인 수정 --}}
+<div class="tcs-skills-wrap">
+
+  <div class="tcs-tab-toolbar">
+    <button id="tcs-add-skill" class="tcs-add-btn">
+      <i class="fa fa-plus"></i> 기능 추가
+    </button>
+  </div>
+
+  {{!-- 훈련된 기능 --}}
+  <div class="tcs-skills-section">
+    <div class="tcs-skills-section-title tcs-trained-title">
+      훈련된 기능 <span class="tcs-cnt">{{trainedSkills.length}}</span>
+    </div>
+    {{#if trainedSkills.length}}
+      <div class="tcs-skill-grid">
+        {{#each trainedSkills}}
+          <div class="tcs-skill-row tcs-roll-skill tcs-skill-trained"
+            data-skill-key="{{key}}"
+            data-skill="{{key}}"
+            data-label="{{label}}"
+            data-val="{{value}}"
+            data-cha="{{chaDefault}}"
+            title="🎲 클릭하여 굴림">
+            <span class="tcs-skill-name">{{label}}</span>
+            <span class="tcs-skill-level tcs-skill-level-edit"
+              data-value="{{value}}"
+              title="클릭하여 레벨 수정"
+              style="cursor:pointer;">{{value}}</span>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="tcs-empty tcs-empty-sm">훈련된 기능 없음</div>
+    {{/if}}
+  </div>
+
+  {{!-- 미훈련 기능 --}}
+  <div class="tcs-skills-section tcs-untrained-section">
+    <div class="tcs-skills-section-title tcs-untrained-title">
+      미훈련 기능 <span class="tcs-cnt">{{untrainedSkills.length}}</span>
+      <span class="tcs-untrained-note">(-3 패널티 / 숫자 클릭으로 수정)</span>
+    </div>
+    {{#if untrainedSkills.length}}
+      <div class="tcs-skill-grid">
+        {{#each untrainedSkills}}
+          <div class="tcs-skill-row tcs-roll-skill tcs-skill-untrained"
+            data-skill-key="{{key}}"
+            data-skill="{{key}}"
+            data-label="{{label}}"
+            data-val="-3"
+            data-cha="{{chaDefault}}"
+            title="미훈련 (-3) / 숫자 클릭으로 수정">
+            <span class="tcs-skill-name">{{label}}</span>
+            <span class="tcs-skill-level tcs-skill-level-edit tcs-untrained-val"
+              data-value="-3"
+              title="클릭하여 레벨 수정"
+              style="cursor:pointer;">-3</span>
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+
+</div>

@@ -1,0 +1,49 @@
+{{!-- tabs/shop.html --}}
+<div class="tcs-shop-wrap">
+
+  {{#if shopAvailable}}
+
+    <div class="tcs-shop-toolbar">
+      <div class="tcs-shop-cash">
+        보유 현금: <strong class="tcs-gold">Cr {{finance.cash}}</strong>
+      </div>
+      <select id="tcs-shop-filter" class="tcs-select">
+        <option value="all">전체</option>
+        <option value="armour">방어구</option>
+        <option value="weapon">무기</option>
+        <option value="augment">강화 장치</option>
+        <option value="item">장비</option>
+      </select>
+      <input id="tcs-shop-search" class="tcs-search-input" type="text" placeholder="이름 검색...">
+    </div>
+
+    <div id="tcs-shop-body" class="tcs-shop-body">
+      <div class="tcs-loading">
+        <i class="fa fa-spinner fa-spin"></i> 컴펜디엄 로딩 중...
+      </div>
+      <table class="tcs-shop-table" style="display:none">
+        <thead>
+          <tr>
+            <th>이름</th>
+            <th>TL</th>
+            <th>무게</th>
+            <th>합법성</th>
+            <th>가격</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tcs-shop-tbody"></tbody>
+      </table>
+    </div>
+
+  {{else}}
+
+    <div class="tcs-shop-unavailable">
+      <i class="fa fa-triangle-exclamation"></i>
+      <p><strong>traveller-chargen-items</strong> 모듈이 활성화되지 않았습니다.</p>
+      <p>FVTT 설정 → 모듈 관리에서 활성화해주세요.</p>
+    </div>
+
+  {{/if}}
+
+</div>

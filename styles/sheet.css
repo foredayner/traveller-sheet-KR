@@ -1,0 +1,851 @@
+/* ─────────────────────────────────────────────────────────────
+   traveller-chargen-sheet / sheet.css
+   우리 웹앱 디자인 언어 기반 FVTT 시트 스타일
+───────────────────────────────────────────────────────────── */
+
+/* ── CSS 변수 ─────────────────────────────────────────────── */
+.tcs-sheet {
+  --tcs-bg:       #0e1117;
+  --tcs-surface:  #161b24;
+  --tcs-deep:     #0b0f16;
+  --tcs-border:   #2a3142;
+  --tcs-text:     #e2e8f0;
+  --tcs-muted:    #8892a4;
+  --tcs-dim:      #4a5568;
+  --tcs-cyan:     #4fc3f7;
+  --tcs-gold:     #ffd54f;
+  --tcs-green:    #81c784;
+  --tcs-red:      #e57373;
+  --tcs-radius:   6px;
+  --tcs-font-mono: 'Courier New', monospace;
+  --tcs-font-body: inherit;
+
+  background: var(--tcs-bg);
+  color: var(--tcs-text);
+  font-family: var(--tcs-font-body);
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ── 헤더 ─────────────────────────────────────────────────── */
+.tcs-header {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--tcs-surface);
+  border-bottom: 1px solid var(--tcs-border);
+  flex-shrink: 0;
+}
+
+.tcs-portrait {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--tcs-radius);
+  overflow: hidden;
+  border: 2px solid var(--tcs-border);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.tcs-portrait img { width: 100%; height: 100%; object-fit: cover; }
+.tcs-portrait-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--tcs-deep);
+  color: var(--tcs-dim);
+  font-size: 1.8rem;
+}
+
+.tcs-header-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.tcs-name-input {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--tcs-text);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--tcs-border);
+  padding: 0.1rem 0;
+  width: 100%;
+}
+.tcs-name-input:focus { outline: none; border-bottom-color: var(--tcs-cyan); }
+
+.tcs-header-meta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.tcs-meta-item { font-size: 0.75rem; }
+.tcs-meta-label { color: var(--tcs-muted); margin-right: 0.25rem; }
+.tcs-meta-value { color: var(--tcs-text); font-family: var(--tcs-font-mono); }
+
+.tcs-header-finance {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+}
+.tcs-cash-label { color: var(--tcs-muted); }
+.tcs-cash-input {
+  width: 90px;
+  background: var(--tcs-deep);
+  border: 1px solid var(--tcs-border);
+  border-radius: 4px;
+  color: var(--tcs-gold);
+  font-family: var(--tcs-font-mono);
+  font-size: 0.85rem;
+  padding: 0.15rem 0.4rem;
+  text-align: right;
+}
+.tcs-cash-unit { color: var(--tcs-muted); font-size: 0.75rem; }
+.tcs-pension { color: var(--tcs-cyan); font-size: 0.75rem; margin-left: 0.5rem; }
+
+/* ── 특성치 UPP ───────────────────────────────────────────── */
+.tcs-upp {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+.tcs-char-box {
+  text-align: center;
+  background: var(--tcs-deep);
+  border: 1px solid var(--tcs-border);
+  border-radius: var(--tcs-radius);
+  padding: 0.3rem 0.4rem;
+  min-width: 40px;
+}
+.tcs-char-key  { font-family: var(--tcs-font-mono); font-size: 0.6rem; color: var(--tcs-muted); letter-spacing: 0.08em; }
+.tcs-char-val  { font-size: 1.2rem; font-weight: 700; color: var(--tcs-text); line-height: 1.1; }
+.tcs-char-val-input {
+  width: 36px; font-size: 1.2rem; font-weight: 700; color: var(--tcs-text); line-height: 1.1;
+  background: transparent; border: none; padding: 0; text-align: center;
+  font-family: inherit; cursor: text;
+}
+.tcs-char-val-input:focus { outline: 1px solid var(--tcs-cyan); border-radius: 3px; }
+.tcs-char-val-input:disabled { color: var(--tcs-text); cursor: default; }
+.tcs-char-val-input::-webkit-inner-spin-button, .tcs-char-val-input::-webkit-outer-spin-button {
+  -webkit-appearance: none; margin: 0;
+}
+.tcs-char-val-input[type=number] { -moz-appearance: textfield; }
+.tcs-char-dm   { font-family: var(--tcs-font-mono); font-size: 0.65rem; color: var(--tcs-cyan); }
+.tcs-char-ko   { font-size: 0.55rem; color: var(--tcs-dim); }
+
+/* ── 탭 네비 ──────────────────────────────────────────────── */
+.tcs-tabs {
+  display: flex;
+  gap: 0;
+  background: var(--tcs-deep);
+  border-bottom: 1px solid var(--tcs-border);
+  flex-shrink: 0;
+}
+.tcs-tab {
+  padding: 0.5rem 0.9rem;
+  font-size: 0.78rem;
+  color: var(--tcs-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+}
+.tcs-tab:hover { color: var(--tcs-text); }
+.tcs-tab.active { color: var(--tcs-cyan); border-bottom-color: var(--tcs-cyan); }
+.tcs-tab-count {
+  background: var(--tcs-border);
+  color: var(--tcs-muted);
+  font-size: 0.65rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 10px;
+}
+.tcs-tab-warn {
+  color: var(--tcs-gold);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+/* ── 탭 본문 ──────────────────────────────────────────────── */
+.tcs-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem;
+}
+.tcs-tab-content { display: none; }
+.tcs-tab-content.active { display: block; }
+
+/* ── 카드 ─────────────────────────────────────────────────── */
+.tcs-card {
+  background: var(--tcs-surface);
+  border: 1px solid var(--tcs-border);
+  border-radius: var(--tcs-radius);
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.tcs-card-title {
+  font-family: var(--tcs-font-mono);
+  font-size: 0.65rem;
+  color: var(--tcs-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--tcs-border);
+  padding-bottom: 0.3rem;
+}
+.tcs-card-en { color: var(--tcs-dim); margin-left: 0.5rem; }
+
+/* ── 기본정보 탭 ──────────────────────────────────────────── */
+.tcs-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+.tcs-combat-card { grid-column: 1 / -1; }
+
+.tcs-combat-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.tcs-combat-item { text-align: center; }
+.tcs-combat-label { font-size: 0.65rem; color: var(--tcs-muted); margin-bottom: 0.2rem; }
+.tcs-combat-value { font-size: 1.4rem; font-weight: 700; font-family: var(--tcs-font-mono); }
+.tcs-hits { color: var(--tcs-green); }
+.tcs-rads { color: var(--tcs-red); }
+
+.tcs-damage-row {
+  display: flex;
+  gap: 1rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--tcs-border);
+}
+.tcs-damage-item { display: flex; align-items: center; gap: 0.4rem; }
+.tcs-damage-label { font-size: 0.7rem; color: var(--tcs-muted); }
+.tcs-damage-input {
+  width: 48px;
+  background: var(--tcs-deep);
+  border: 1px solid var(--tcs-border);
+  border-radius: 4px;
+  color: var(--tcs-red);
+  text-align: center;
+  padding: 0.2rem;
+  font-family: var(--tcs-font-mono);
+}
+
+.tcs-bio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.tcs-bio-item { display: flex; flex-direction: column; gap: 0.2rem; }
+.tcs-label { font-size: 0.65rem; color: var(--tcs-muted); }
+.tcs-input {
+  background: var(--tcs-deep);
+  border: 1px solid var(--tcs-border);
+  border-radius: 4px;
+  color: var(--tcs-text);
+  padding: 0.3rem 0.5rem;
+  font-size: 0.85rem;
+}
+.tcs-input:focus { outline: none; border-color: var(--tcs-cyan); }
+.tcs-textarea {
+  background: var(--tcs-deep);
+  border: 1px solid var(--tcs-border);
+  border-radius: 4px;
+  color: var(--tcs-text);
+  padding: 0.4rem 0.5rem;
+  font-size: 0.82rem;
+  resize: vertical;
+  width: 100%;
+}
+
+.tcs-finance-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+.tcs-finance-item { display: flex; flex-direction: column; gap: 0.2rem; }
+
+/* ── 기능 탭 ──────────────────────────────────────────────── */
+.tcs-skills-wrap { padding: 0.25rem; }
+.tcs-skills-header {
+  font-size: 0.75rem;
+  color: var(--tcs-muted);
+  margin-bottom: 0.5rem;
+}
+.tcs-skill-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.25rem;
+}
+.tcs-skill-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  background: var(--tcs-surface);
+  border: 1px solid var(--tcs-border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.1s;
+}
+.tcs-skill-row:hover { border-color: var(--tcs-cyan); }
+.tcs-skill-name { font-size: 0.8rem; color: var(--tcs-text); }
+.tcs-skill-level {
+  font-family: var(--tcs-font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tcs-cyan);
+  min-width: 1.2rem;
+  text-align: center;
+}
+.tcs-level-0 { color: var(--tcs-muted); }
+
+/* ── 장비 탭 ──────────────────────────────────────────────── */
+.tcs-equip-wrap { padding: 0.25rem; }
+.tcs-equip-summary {
+  font-size: 0.78rem;
+  color: var(--tcs-muted);
+  margin-bottom: 0.5rem;
+}
+.tcs-equip-section { margin-bottom: 1rem; }
+.tcs-equip-section-title {
+  font-family: var(--tcs-font-mono);
+  font-size: 0.65rem;
+  color: var(--tcs-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+  padding-left: 0.25rem;
+  border-left: 2px solid var(--tcs-cyan);
+}
+.tcs-equip-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.tcs-equip-table th {
+  background: var(--tcs-deep);
+  color: var(--tcs-muted);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--tcs-border);
+}
+.tcs-equip-table td {
+  padding: 0.35rem 0.5rem;
+  border-bottom: 1px solid rgba(42,49,66,0.5);
+  color: var(--tcs-text);
+}
+.tcs-equip-table tr:hover td { background: rgba(79,195,247,0.04); }
+.tcs-item-name { font-weight: 500; }
+.tcs-damage { color: var(--tcs-red); font-family: var(--tcs-font-mono); }
+.tcs-skill-tag { font-size: 0.72rem; color: var(--tcs-muted); }
+.tcs-qty-input {
+  width: 44px;
+  background: var(--tcs-deep);
+  border: 1px solid var(--tcs-border);
+  border-radius: 3px;
+  color: var(--tcs-text);
+  text-align: center;
+  padding: 0.1rem;
+  font-size: 0.82rem;
+}
+.tcs-item-actions { display: flex; gap: 0.3rem; }
+.tcs-item-sell, .tcs-item-delete {
+  background: none;
+  border: 1px solid var(--tcs-border);
+  border-radius: 3px;
+  color: var(--tcs-muted);
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.4rem;
+  transition: color 0.1s, border-color 0.1s;
+}
+.tcs-item-sell:hover  { color: var(--tcs-gold); border-color: var(--tcs-gold); }
+.tcs-item-delete:hover { color: var(--tcs-red); border-color: var(--tcs-red); }
+
+/* ── 상점 탭 ──────────────────────────────────────────────── */
+.tcs-shop-wrap { padding: 0.25rem; }
+.tcs-shop-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  padding: 0.5rem 0.6rem;
+  background: var(--tcs-surface);
+  border: 1px solid var(--tcs-border);
+  border-radius: var(--tcs-radius);
+}
+.tcs-shop-cash { font-size: 0.82rem; flex: 1; }
+.tcs-gold { color: var(--tcs-gold); font-family: var(--tcs-font-mono); }
+.tcs-select {
+  background: var(--tcs-deep);
+  border: 1px solid var(--tcs-border);
+  border-radius: 4px;
+  color: var(--tcs-text);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+.tcs-search-input {
+  background: var(--tcs-deep);
+  border: 1px solid var(--tcs-border);
+  border-radius: 4px;
+  color: var(--tcs-text);
+  padding: 0.25rem 0.6rem;
+  font-size: 0.8rem;
+  width: 160px;
+}
+.tcs-search-input:focus { outline: none; border-color: var(--tcs-cyan); }
+
+.tcs-shop-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.tcs-shop-table th {
+  background: var(--tcs-deep);
+  color: var(--tcs-muted);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--tcs-border);
+  position: sticky;
+  top: 0;
+}
+.tcs-shop-table td {
+  padding: 0.3rem 0.5rem;
+  border-bottom: 1px solid rgba(42,49,66,0.5);
+}
+.tcs-shop-table tr:hover td { background: rgba(79,195,247,0.04); }
+.tcs-shop-name { color: var(--tcs-text); }
+.tcs-shop-tl, .tcs-shop-weight, .tcs-shop-legal { color: var(--tcs-muted); font-size: 0.78rem; }
+.tcs-shop-cost { color: var(--tcs-gold); font-family: var(--tcs-font-mono); }
+.tcs-cant-afford { color: var(--tcs-red) !important; }
+.tcs-shop-buy {
+  background: rgba(79,195,247,0.15);
+  border: 1px solid var(--tcs-cyan);
+  border-radius: 3px;
+  color: var(--tcs-cyan);
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  transition: background 0.1s;
+}
+.tcs-shop-buy:hover { background: rgba(79,195,247,0.3); }
+.tcs-shop-buy.tcs-disabled {
+  border-color: var(--tcs-dim);
+  color: var(--tcs-dim);
+  cursor: not-allowed;
+  background: none;
+}
+
+.tcs-type-badge {
+  font-size: 0.6rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 3px;
+  margin-right: 0.3rem;
+  background: var(--tcs-border);
+  color: var(--tcs-muted);
+}
+.tcs-type-armour  { background: rgba(129,199,132,0.2); color: var(--tcs-green); }
+.tcs-type-weapon  { background: rgba(229,115,115,0.2); color: var(--tcs-red); }
+.tcs-type-augment { background: rgba(79,195,247,0.2);  color: var(--tcs-cyan); }
+.tcs-type-item    { background: rgba(255,213,79,0.2);  color: var(--tcs-gold); }
+
+.tcs-loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--tcs-muted);
+  font-size: 0.9rem;
+}
+.tcs-shop-unavailable {
+  text-align: center;
+  padding: 2rem;
+  color: var(--tcs-muted);
+}
+.tcs-shop-unavailable i { font-size: 2rem; color: var(--tcs-gold); margin-bottom: 0.5rem; }
+
+/* ── 경력 탭 ──────────────────────────────────────────────── */
+.tcs-career-wrap { padding: 0.25rem; }
+.tcs-assoc-list { display: flex; flex-direction: column; gap: 0.3rem; }
+.tcs-assoc-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.5rem;
+  background: var(--tcs-deep);
+  border-radius: 4px;
+}
+.tcs-assoc-type {
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  font-weight: 600;
+  min-width: 50px;
+  text-align: center;
+}
+.tcs-assoc-ally    { background: rgba(129,199,132,0.2); color: var(--tcs-green); }
+.tcs-assoc-contact { background: rgba(79,195,247,0.2);  color: var(--tcs-cyan); }
+.tcs-assoc-rival   { background: rgba(255,213,79,0.2);  color: var(--tcs-gold); }
+.tcs-assoc-enemy   { background: rgba(229,115,115,0.2); color: var(--tcs-red); }
+.tcs-assoc-name  { font-weight: 500; color: var(--tcs-text); flex: 1; }
+.tcs-assoc-notes { font-size: 0.75rem; color: var(--tcs-muted); flex: 2; }
+.tcs-assoc-delete {
+  background: none;
+  border: 1px solid var(--tcs-border);
+  border-radius: 3px;
+  color: var(--tcs-muted);
+  cursor: pointer;
+  font-size: 0.72rem;
+  padding: 0.1rem 0.35rem;
+}
+.tcs-assoc-delete:hover { color: var(--tcs-red); border-color: var(--tcs-red); }
+
+.tcs-terms-list { display: flex; flex-direction: column; gap: 0.3rem; }
+.tcs-term-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0.5rem;
+  background: var(--tcs-deep);
+  border-radius: 4px;
+}
+.tcs-term-num    { font-family: var(--tcs-font-mono); font-size: 0.72rem; color: var(--tcs-muted); min-width: 36px; }
+.tcs-term-career { font-weight: 500; color: var(--tcs-text); flex: 1; }
+.tcs-term-notes  { font-size: 0.75rem; color: var(--tcs-muted); flex: 2; }
+
+/* ── 공통 ─────────────────────────────────────────────────── */
+.tcs-empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--tcs-muted);
+  font-size: 0.85rem;
+}
+
+/* ── v2 추가 스타일 ───────────────────────────────────────── */
+
+/* 헤더 개선 */
+.tcs-header-top { display:flex; flex-direction:column; gap:0.3rem; }
+.tcs-upp-row { display:flex; gap:0.25rem; flex-wrap:wrap; }
+.tcs-header-bottom { display:flex; gap:0.75rem; flex-wrap:wrap; align-items:center; }
+.tcs-meta { font-size:0.75rem; color:var(--tcs-muted); display:flex; align-items:center; gap:0.25rem; }
+.tcs-meta i { font-size:0.65rem; }
+.tcs-cyan { color:var(--tcs-cyan) !important; }
+.tcs-red  { color:var(--tcs-red)  !important; }
+.tcs-muted { color:var(--tcs-muted) !important; }
+.tcs-small { font-size:0.72rem; }
+.tcs-cnt { font-size:0.65rem; background:var(--tcs-border); color:var(--tcs-muted); padding:0.05rem 0.3rem; border-radius:8px; margin-left:0.2rem; }
+
+/* 특성치 박스 클릭 효과 */
+.tcs-roll-char { cursor:pointer; transition:border-color 0.15s, background 0.15s; }
+.tcs-roll-char:hover { border-color:var(--tcs-cyan); background:rgba(79,195,247,0.08); }
+
+/* 탭 카운트 */
+.tcs-warn { color:var(--tcs-gold); font-weight:700; }
+
+/* 기능 탭 개선 */
+.tcs-section-header { font-size:0.75rem; color:var(--tcs-muted); margin-bottom:0.5rem; padding:0 0.25rem; }
+.tcs-skill-row { position:relative; }
+.tcs-roll-skill { cursor:pointer; }
+.tcs-roll-icon { position:absolute; right:2.5rem; top:50%; transform:translateY(-50%); opacity:0; font-size:0.75rem; transition:opacity 0.15s; }
+.tcs-skill-row:hover .tcs-roll-icon { opacity:1; }
+.tcs-skill-row:hover { border-color:var(--tcs-cyan); background:rgba(79,195,247,0.06); }
+
+/* 장비 탭 장착 상태 */
+.tcs-equipped { background:rgba(79,195,247,0.05); }
+.tcs-equipped-badge {
+  display:inline-block; font-size:0.6rem; padding:0.05rem 0.3rem;
+  background:rgba(79,195,247,0.2); color:var(--tcs-cyan);
+  border-radius:3px; margin-right:0.3rem;
+}
+.tcs-item-equip {
+  background:none; border:1px solid var(--tcs-border);
+  border-radius:3px; cursor:pointer; padding:0.15rem 0.35rem;
+  font-size:0.8rem; transition:border-color 0.1s;
+}
+.tcs-item-equip:hover { border-color:var(--tcs-cyan); }
+.tcs-btn-active { border-color:var(--tcs-cyan) !important; background:rgba(79,195,247,0.15) !important; }
+
+/* 주사위 굴림 다이얼로그 */
+.tcs-roll-dialog { padding:0.5rem; }
+.tcs-roll-title {
+  font-size:1rem; font-weight:700; color:var(--tcs-cyan);
+  margin-bottom:0.5rem; padding-bottom:0.4rem;
+  border-bottom:1px solid var(--tcs-border);
+}
+.tcs-roll-skill-val { font-size:0.8rem; color:var(--tcs-muted); margin-bottom:0.75rem; }
+.tcs-roll-row {
+  display:flex; align-items:center; gap:0.75rem;
+  margin-bottom:0.4rem; font-size:0.85rem;
+}
+.tcs-roll-row label { min-width:70px; color:var(--tcs-muted); font-size:0.8rem; }
+.tcs-roll-row select, .tcs-roll-row input {
+  background:var(--tcs-deep); border:1px solid var(--tcs-border);
+  border-radius:4px; color:var(--tcs-text); padding:0.25rem 0.4rem;
+  font-size:0.82rem; flex:1;
+}
+
+/* 굴림 결과 채팅 메시지 */
+.tcs-roll-result {
+  background:var(--tcs-surface); border:1px solid var(--tcs-border);
+  border-radius:6px; padding:0.6rem 0.75rem;
+}
+.tcs-roll-result-title { font-size:0.78rem; color:var(--tcs-muted); margin-bottom:0.3rem; }
+.tcs-roll-result-dice { font-size:0.9rem; color:var(--tcs-text); margin-bottom:0.35rem; font-family:var(--tcs-font-mono); }
+.tcs-roll-result-outcome { font-size:1.05rem; font-weight:700; }
+
+/* 재정 메모 */
+.tcs-finance-note { font-size:0.78rem; color:var(--tcs-muted); padding:0.3rem 0.4rem; background:var(--tcs-deep); border-radius:4px; }
+
+/* ── 3번 추가 스타일 ──────────────────────────────────────── */
+
+/* 혜택 배지 */
+.tcs-benefits-list { display:flex; flex-wrap:wrap; gap:0.35rem; }
+.tcs-benefit-badge {
+  font-size:0.72rem; padding:0.15rem 0.5rem;
+  background:rgba(255,213,79,0.15); color:var(--tcs-gold);
+  border:1px solid rgba(255,213,79,0.3); border-radius:12px;
+}
+
+/* 경력 이력 */
+.tcs-career-list { display:flex; flex-direction:column; gap:0.3rem; }
+.tcs-career-row {
+  display:flex; align-items:center; gap:0.6rem;
+  padding:0.3rem 0.5rem;
+  background:var(--tcs-deep); border-radius:4px;
+}
+.tcs-career-badge {
+  font-family:var(--tcs-font-mono); font-size:0.68rem;
+  padding:0.1rem 0.4rem;
+  background:rgba(79,195,247,0.15); color:var(--tcs-cyan);
+  border-radius:3px; flex-shrink:0;
+}
+.tcs-career-name { font-weight:500; color:var(--tcs-text); flex:1; font-size:0.85rem; }
+.tcs-career-notes { font-size:0.72rem; color:var(--tcs-muted); flex:2; }
+.tcs-career-year { font-size:0.68rem; font-family:var(--tcs-font-mono); flex-shrink:0; }
+
+/* PSI */
+.tcs-psi-active { border-color:var(--tcs-cyan) !important; }
+.tcs-psi-badge {
+  font-family:var(--tcs-font-mono); font-size:0.68rem;
+  color:var(--tcs-cyan); margin-left:0.5rem;
+  background:rgba(79,195,247,0.15); padding:0.05rem 0.4rem;
+  border-radius:3px;
+}
+.tcs-psi-info { margin-bottom:0.5rem; }
+.tcs-psi-stat { display:flex; align-items:center; gap:0.75rem; }
+.tcs-psi-val {
+  font-size:1.4rem; font-weight:700;
+  font-family:var(--tcs-font-mono); color:var(--tcs-cyan);
+}
+.tcs-psi-dm { font-family:var(--tcs-font-mono); font-size:0.85rem; }
+.tcs-psi-skills { margin-top:0.5rem; }
+
+/* ── 상점 툴바 스타일 수정 ────────────────────────────────── */
+.tcs-shop-toolbar {
+  background: #1e2530 !important;
+  border: 1px solid var(--tcs-cyan) !important;
+  color: var(--tcs-text) !important;
+}
+.tcs-select,
+.tcs-search-input {
+  background: #0e1117 !important;
+  color: var(--tcs-text) !important;
+  border: 1px solid var(--tcs-border) !important;
+}
+.tcs-select option { background: #0e1117; color: var(--tcs-text); }
+
+/* ── 기능 탭 훈련/미훈련 분리 ────────────────────────────── */
+.tcs-skills-section { margin-bottom: 1rem; }
+.tcs-skills-section-title {
+  font-family: var(--tcs-font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.tcs-trained-title {
+  background: rgba(79,195,247,0.1);
+  color: var(--tcs-cyan);
+  border-left: 3px solid var(--tcs-cyan);
+}
+.tcs-untrained-section { opacity: 0.7; }
+.tcs-untrained-title {
+  background: rgba(74,85,104,0.2);
+  color: var(--tcs-muted);
+  border-left: 3px solid var(--tcs-dim);
+}
+.tcs-untrained-note {
+  font-size: 0.6rem;
+  color: var(--tcs-dim);
+  margin-left: auto;
+}
+.tcs-skill-trained .tcs-skill-level { color: var(--tcs-cyan); }
+.tcs-skill-untrained { opacity: 0.6; }
+.tcs-skill-untrained:hover { opacity: 1; }
+.tcs-untrained-val { color: var(--tcs-dim) !important; }
+.tcs-empty-sm { padding: 0.5rem; font-size: 0.8rem; }
+
+/* ── 추가 버튼 툴바 ──────────────────────────────────────── */
+.tcs-tab-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+.tcs-add-btn {
+  background: rgba(79,195,247,0.12);
+  border: 1px solid var(--tcs-cyan);
+  border-radius: 4px;
+  color: var(--tcs-cyan);
+  cursor: pointer;
+  font-size: 0.78rem;
+  padding: 0.25rem 0.75rem;
+  transition: background 0.15s;
+}
+.tcs-add-btn:hover { background: rgba(79,195,247,0.25); }
+
+/* ── 추가 다이얼로그 ─────────────────────────────────────── */
+.tcs-add-dialog { padding: 0.25rem 0; }
+.tcs-add-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+}
+.tcs-add-row label {
+  min-width: 72px;
+  color: #8892a4;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+.tcs-add-row input,
+.tcs-add-row select {
+  flex: 1;
+  background: #0b0f16 !important;
+  border: 1px solid #2a3142;
+  border-radius: 4px;
+  color: #e2e8f0 !important;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.82rem;
+}
+.tcs-add-row input::placeholder { color: #8892a4; opacity: 1; }
+.tcs-add-row select option { background: #0b0f16; color: #e2e8f0; }
+.tcs-add-dialog, .tcs-add-dialog * { color: #e2e8f0; }
+.tcs-req { color: #e57373; }
+.dialog:has(.tcs-add-dialog) .window-content { background: #161b24; color: #e2e8f0; }
+
+/* ── PSI 수정 UI ──────────────────────────────────────────── */
+.tcs-psi-stat-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+}
+.tcs-psi-edit-btn {
+  cursor: pointer;
+  color: var(--tcs-muted);
+  font-size: 0.8rem;
+  padding: 0.1rem 0.3rem;
+  border: 1px solid var(--tcs-border);
+  border-radius: 3px;
+  transition: color 0.1s, border-color 0.1s;
+}
+.tcs-psi-edit-btn:hover {
+  color: var(--tcs-cyan);
+  border-color: var(--tcs-cyan);
+}
+
+/* ── 굴림 다이얼로그 — FVTT 기본 다이얼로그 안에서 글씨 보이도록 ── */
+.tcs-roll-dialog {
+  padding: 0.5rem;
+  color: #1a1a2e;  /* 어두운 글씨 (밝은 배경 기준) */
+}
+.tcs-roll-dialog .tcs-roll-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1565c0;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #ccc;
+}
+.tcs-roll-dialog .tcs-roll-skill-val {
+  font-size: 0.82rem;
+  color: #555;
+  margin-bottom: 0.75rem;
+}
+.tcs-roll-dialog .tcs-roll-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+}
+.tcs-roll-dialog .tcs-roll-row label {
+  min-width: 70px;
+  color: #444;
+  font-size: 0.8rem;
+}
+.tcs-roll-dialog .tcs-roll-row select,
+.tcs-roll-dialog .tcs-roll-row input {
+  flex: 1;
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #1a1a2e;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.82rem;
+}
+.tcs-roll-item-dms { display: flex; flex-direction: column; gap: 0.25rem; flex: 1; }
+.tcs-roll-item-dm { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: #333; }
+.tcs-roll-item-dm input { flex: none; width: auto; }
+.tcs-roll-item-dm-special { color: #777; }
+.tcs-roll-item-dm-note { font-size: 0.7rem; color: #b71c1c; margin-left: 0.3rem; }
+
+.tcs-grant-label { font-size: 0.65rem; color: var(--tcs-cyan); margin-left: 0.3rem; }
+
+/* ── 아이템 시트 ──────────────────────────────────────────── */
+.tcs-item-sheet { height: auto; overflow: visible; }
+.tcs-item-sheet .tcs-body { overflow: visible; }
+
+/* select 옵션 목록도 어두운 배경 + 흰 글씨로 강제 */
+.tcs-input option, select.tcs-input { background: var(--tcs-deep); color: var(--tcs-text); }
+
+/* ── 특성(Traits) 태그 편집기 ──────────────────────────────── */
+.tcs-traits-editor { display:flex; flex-direction:column; gap:0.4rem; }
+.tcs-traits-tags { display:flex; flex-wrap:wrap; gap:0.3rem; min-height:1.6rem; }
+.tcs-trait-tag {
+  display:inline-flex; align-items:center; gap:0.3rem;
+  background:var(--tcs-surface); border:1px solid var(--tcs-border);
+  border-radius:12px; padding:0.15rem 0.5rem; font-size:0.78rem; color:var(--tcs-text);
+}
+.tcs-trait-remove {
+  background:none; border:none; color:var(--tcs-muted); cursor:pointer;
+  font-size:0.7rem; padding:0; line-height:1;
+}
+.tcs-trait-remove:hover { color:var(--tcs-red); }
+.tcs-traits-add-row { display:flex; gap:0.4rem; align-items:center; }
+.tcs-traits-add-btn {
+  background:var(--tcs-cyan); color:#000; border:none; border-radius:4px;
+  padding:0.3rem 0.7rem; font-size:0.82rem; cursor:pointer; white-space:nowrap;
+}
+.tcs-traits-add-btn:hover { filter:brightness(1.15); }

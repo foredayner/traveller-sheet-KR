@@ -1,0 +1,138 @@
+{{!-- tabs/career.html v4 --}}
+<div class="tcs-career-wrap">
+
+  {{!-- 혜택 --}}
+  {{#if benefits.length}}
+  <div class="tcs-card">
+    <div class="tcs-card-title">제대 혜택 <span class="tcs-card-en">BENEFITS</span></div>
+    <div class="tcs-benefits-list">
+      {{#each benefits}}
+        <span class="tcs-benefit-badge">{{this}}</span>
+      {{/each}}
+    </div>
+    <div style="margin-top:0.5rem;font-size:0.78rem;color:var(--tcs-muted);">
+      현금: <span style="color:var(--tcs-gold);font-family:var(--tcs-font-mono);">
+        Cr {{cashBenefit}}
+      </span>
+    </div>
+  </div>
+  {{/if}}
+
+  {{!-- 경력 이력 --}}
+  {{#if careerHistory.length}}
+  <div class="tcs-card">
+    <div class="tcs-card-title">경력 이력 <span class="tcs-card-en">CAREER HISTORY</span></div>
+    <div class="tcs-career-list">
+      {{#each careerHistory}}
+        <div class="tcs-career-row">
+          <span class="tcs-career-badge">{{terms}}주기</span>
+          <span class="tcs-career-name">{{career}}</span>
+          {{#if notes}}<span class="tcs-career-notes">{{notes}}</span>{{/if}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
+  {{/if}}
+
+  {{!-- 인맥 --}}
+  {{#if associates.length}}
+  <div class="tcs-card">
+    <div class="tcs-card-title">인맥 <span class="tcs-card-en">ASSOCIATES <span class="tcs-cnt">{{associates.length}}</span></span></div>
+    <div class="tcs-assoc-list">
+      {{#each associates}}
+        <div class="tcs-assoc-row" data-item-id="{{id}}">
+          <span class="tcs-assoc-type tcs-assoc-{{system.associate.relationship}}">
+            {{system.associate.relationship}}
+          </span>
+          <span class="tcs-assoc-name">{{name}}</span>
+          <span class="tcs-assoc-notes">{{system.notes}}</span>
+          {{#if ../editable}}
+            <button class="tcs-item-delete" title="삭제">✕</button>
+          {{/if}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
+  {{/if}}
+
+  {{!-- 초능력 --}}
+  <div class="tcs-card {{#if hasPsi}}tcs-psi-active{{/if}}">
+    <div class="tcs-card-title tcs-psi-toggle"
+      style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;">
+      <span>
+        초능력 <span class="tcs-card-en">PSIONICS</span>
+        {{#if hasPsi}}
+          <span class="tcs-psi-badge">PSI {{psiVal}} ({{psiDm}})</span>
+        {{/if}}
+      </span>
+      <span class="tcs-psi-arrow">▼</span>
+    </div>
+
+    <div class="tcs-psi-body" style="display:none; margin-top:0.5rem;">
+
+      {{!-- PSI 강도 수정 --}}
+      <div class="tcs-psi-stat-row">
+        <span class="tcs-label">초능력 강도 (PSI)</span>
+        <span class="tcs-psi-val-display tcs-roll-char" data-cha="PSI"
+          style="font-size:1.3rem;font-weight:700;font-family:var(--tcs-font-mono);
+                 color:var(--tcs-cyan);cursor:pointer;" title="클릭하여 굴림">
+          {{psiVal}}
+        </span>
+        {{#if editable}}
+        <span id="tcs-psi-val-edit" data-value="{{psiVal}}"
+          class="tcs-psi-edit-btn" title="클릭하여 수정">✎</span>
+        {{/if}}
+        <span class="tcs-cyan" style="font-family:var(--tcs-font-mono);font-size:0.82rem;">
+          DM {{psiDm}}
+        </span>
+      </div>
+
+      {{!-- PSI 기능 목록 --}}
+      <div class="tcs-psi-skills" style="margin-top:0.6rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem;">
+          <span class="tcs-label">초능력 기능</span>
+          {{#if editable}}
+          <button id="tcs-add-psi-skill" class="tcs-add-btn" style="font-size:0.7rem;padding:0.15rem 0.5rem;">
+            <i class="fa fa-plus"></i> 추가
+          </button>
+          {{/if}}
+        </div>
+
+        {{#if psiSkills.length}}
+          <div class="tcs-skill-grid">
+            {{#each psiSkills}}
+              <div class="tcs-skill-row tcs-roll-skill"
+                data-skill-key="{{key}}"
+                data-skill="{{key}}"
+                data-label="{{label}}"
+                data-val="{{value}}"
+                data-cha="PSI"
+                title="🎲 클릭하여 굴림">
+                <span class="tcs-skill-name" style="color:var(--tcs-cyan);">{{label}}</span>
+                <span class="tcs-psi-skill-level tcs-skill-level-edit"
+                  data-key="{{key}}" data-value="{{value}}"
+                  style="color:var(--tcs-cyan);cursor:pointer;"
+                  title="클릭하여 레벨 수정">{{value}}</span>
+              </div>
+            {{/each}}
+          </div>
+        {{else}}
+          <div class="tcs-empty" style="padding:0.5rem 0;font-size:0.8rem;">
+            초능력 기능 없음 — 추가 버튼으로 등록하세요
+          </div>
+        {{/if}}
+      </div>
+
+    </div>
+  </div>
+
+  {{!-- 아무것도 없을 때 --}}
+  {{#unless careerHistory.length}}
+    {{#unless associates.length}}
+      {{#unless benefits.length}}
+        <div class="tcs-empty">경력 정보가 없습니다.</div>
+      {{/unless}}
+    {{/unless}}
+  {{/unless}}
+
+</div>

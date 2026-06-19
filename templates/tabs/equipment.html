@@ -1,0 +1,152 @@
+{{!-- tabs/equipment.html v2 --}}
+<div class="tcs-equip-wrap">
+
+  <div class="tcs-tab-toolbar">
+    <button id="tcs-add-item" class="tcs-add-btn">
+      <i class="fa fa-plus"></i> 장비 추가
+    </button>
+  </div>
+
+  {{!-- 방어구 --}}
+  {{#if armours.length}}
+  <div class="tcs-equip-section">
+    <div class="tcs-equip-title">방어구 <span class="tcs-cnt">{{armours.length}}</span></div>
+    <table class="tcs-equip-table">
+      <thead><tr><th>이름</th><th>방어</th><th>TL</th><th>무게</th><th>수량</th><th>상태</th><th></th></tr></thead>
+      <tbody>
+        {{#each armours}}
+        <tr data-item-id="{{id}}" class="{{#if system.worn}}tcs-equipped{{/if}}">
+          <td class="tcs-item-name">
+            {{#if system.worn}}<span class="tcs-equipped-badge">장착</span>{{/if}}
+            {{name}}
+            {{#with (lookup ../grantLabels id)}}<span class="tcs-grant-label">({{this}})</span>{{/with}}
+            {{#with (lookup ../armourReqLabels id)}}<span class="tcs-grant-label" style="color:var(--tcs-gold);">({{this}})</span>{{/with}}
+          </td>
+          <td class="tcs-gold">{{system.armour.protection}}</td>
+          <td>TL{{system.tl}}</td>
+          <td>{{system.weight}}kg</td>
+          <td><input class="tcs-qty-input" type="number" value="{{system.quantity}}" min="1"></td>
+          <td>
+            <button class="tcs-item-equip {{#if system.worn}}tcs-btn-active{{/if}}" title="{{#if system.worn}}장착 해제{{else}}장착{{/if}}">
+              {{#if system.worn}}🛡️{{else}}⚪{{/if}}
+            </button>
+          </td>
+          <td class="tcs-item-actions">
+            <button class="tcs-item-sell" title="판매">₩</button>
+            <button class="tcs-item-delete" title="삭제">✕</button>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  {{/if}}
+
+  {{!-- 무기 --}}
+  {{#if weapons.length}}
+  <div class="tcs-equip-section">
+    <div class="tcs-equip-title">무기 <span class="tcs-cnt">{{weapons.length}}</span></div>
+    <table class="tcs-equip-table">
+      <thead><tr><th>이름</th><th>피해</th><th>기능</th><th>사거리</th><th>TL</th><th>수량</th><th>휴대</th><th></th></tr></thead>
+      <tbody>
+        {{#each weapons}}
+        <tr data-item-id="{{id}}" class="{{#if system.active}}tcs-equipped{{/if}}">
+          <td class="tcs-item-name">
+            {{#if system.active}}<span class="tcs-equipped-badge">휴대</span>{{/if}}
+            {{name}}
+          </td>
+          <td class="tcs-red">{{system.weapon.damage}}</td>
+          <td class="tcs-muted tcs-small">{{system.weapon.skillKo}}</td>
+          <td class="tcs-muted">{{system.weapon.range}}m</td>
+          <td>TL{{system.tl}}</td>
+          <td><input class="tcs-qty-input" type="number" value="{{system.quantity}}" min="1"></td>
+          <td>
+            <button class="tcs-item-equip {{#if system.active}}tcs-btn-active{{/if}}" title="{{#if system.active}}휴대 해제{{else}}휴대{{/if}}">
+              {{#if system.active}}⚔️{{else}}⚪{{/if}}
+            </button>
+          </td>
+          <td class="tcs-item-actions">
+            <button class="tcs-item-sell" title="판매">₩</button>
+            <button class="tcs-item-delete" title="삭제">✕</button>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  {{/if}}
+
+  {{!-- 강화 장치 --}}
+  {{#if augments.length}}
+  <div class="tcs-equip-section">
+    <div class="tcs-equip-title">강화 장치 <span class="tcs-cnt">{{augments.length}}</span></div>
+    <table class="tcs-equip-table">
+      <thead><tr><th>이름</th><th>TL</th><th>가격</th><th>수량</th><th></th></tr></thead>
+      <tbody>
+        {{#each augments}}
+        <tr data-item-id="{{id}}" class="{{#if system.active}}tcs-equipped{{/if}}">
+          <td class="tcs-item-name">
+            {{name}}
+            {{#if system.active}}<span class="tcs-equipped-badge">이식됨</span>{{/if}}
+            {{#with (lookup ../grantLabels id)}}<span class="tcs-grant-label">({{this}})</span>{{/with}}
+          </td>
+          <td>TL{{system.tl}}</td>
+          <td class="tcs-muted">Cr {{system.cost}}</td>
+          <td><input class="tcs-qty-input" type="number" value="{{system.quantity}}" min="1"></td>
+          <td class="tcs-item-actions">
+            <button class="tcs-item-equip {{#if system.active}}tcs-btn-active{{/if}}" title="{{#if system.active}}이식 해제{{else}}이식{{/if}}">
+              {{#if system.active}}🧬{{else}}⚪{{/if}}
+            </button>
+            <button class="tcs-item-sell" title="판매">₩</button>
+            <button class="tcs-item-delete" title="삭제">✕</button>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  {{/if}}
+
+  {{!-- 일반 장비 --}}
+  {{#if gear.length}}
+  <div class="tcs-equip-section">
+    <div class="tcs-equip-title">장비 <span class="tcs-cnt">{{gear.length}}</span></div>
+    <table class="tcs-equip-table">
+      <thead><tr><th>이름</th><th>TL</th><th>무게</th><th>가격</th><th>수량</th><th></th></tr></thead>
+      <tbody>
+        {{#each gear}}
+        <tr data-item-id="{{id}}" class="{{#if system.active}}tcs-equipped{{/if}}">
+          <td class="tcs-item-name">
+            {{#if system.active}}<span class="tcs-equipped-badge">휴대</span>{{/if}}
+            {{name}}
+            {{#with (lookup ../grantLabels id)}}<span class="tcs-grant-label">({{this}})</span>{{/with}}
+          </td>
+          <td>TL{{system.tl}}</td>
+          <td>{{system.weight}}kg</td>
+          <td class="tcs-muted">Cr {{system.cost}}</td>
+          <td><input class="tcs-qty-input" type="number" value="{{system.quantity}}" min="1"></td>
+          <td class="tcs-item-actions">
+            <button class="tcs-item-equip {{#if system.active}}tcs-btn-active{{/if}}" title="{{#if system.active}}휴대 해제{{else}}휴대{{/if}}">
+              {{#if system.active}}🎒{{else}}⚪{{/if}}
+            </button>
+            <button class="tcs-item-sell" title="판매">₩</button>
+            <button class="tcs-item-delete" title="삭제">✕</button>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  {{/if}}
+
+  {{#unless armours.length}}
+    {{#unless weapons.length}}
+      {{#unless augments.length}}
+        {{#unless gear.length}}
+          <div class="tcs-empty">보유 장비가 없습니다. 상점 탭에서 구매하세요.</div>
+        {{/unless}}
+      {{/unless}}
+    {{/unless}}
+  {{/unless}}
+
+</div>

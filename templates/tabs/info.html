@@ -1,0 +1,162 @@
+{{!-- tabs/info.html v2 --}}
+<div class="tcs-info-grid">
+
+  {{!-- 전투 상태 --}}
+  <div class="tcs-card tcs-combat-card">
+    <div class="tcs-card-title">전투 상태 <span class="tcs-card-en">COMBAT STATUS</span></div>
+    <div class="tcs-combat-row">
+      <div class="tcs-combat-item">
+        <div class="tcs-combat-label">현재 체력</div>
+        <div class="tcs-combat-value tcs-green">{{hitsCurrent}}</div>
+      </div>
+      <div class="tcs-combat-item">
+        <div class="tcs-combat-label">최대 체력</div>
+        <div class="tcs-combat-value">{{hitsMax}}</div>
+      </div>
+      <div class="tcs-combat-item">
+        <div class="tcs-combat-label">방어 합계</div>
+        <div class="tcs-combat-value tcs-cyan">{{totalProtection}}</div>
+      </div>
+      <div class="tcs-combat-item">
+        <div class="tcs-combat-label">방사선</div>
+        <div class="tcs-combat-value tcs-red">{{system.rads}}</div>
+      </div>
+    </div>
+    <div class="tcs-damage-row">
+      <div class="tcs-damage-item">
+        <label class="tcs-label">STR 피해</label>
+        <input class="tcs-damage-input writable" type="number"
+          data-cha="STR"
+          value="{{chars.STR.dmg}}"
+          min="0" {{#unless editable}}disabled{{/unless}}>
+      </div>
+      <div class="tcs-damage-item">
+        <label class="tcs-label">DEX 피해</label>
+        <input class="tcs-damage-input writable" type="number"
+          data-cha="DEX"
+          value="{{chars.DEX.dmg}}"
+          min="0" {{#unless editable}}disabled{{/unless}}>
+      </div>
+      <div class="tcs-damage-item">
+        <label class="tcs-label">END 피해</label>
+        <input class="tcs-damage-input writable" type="number"
+          data-cha="END"
+          value="{{chars.END.dmg}}"
+          min="0" {{#unless editable}}disabled{{/unless}}>
+      </div>
+    </div>
+  </div>
+
+  {{!-- 인물 정보 --}}
+  <div class="tcs-card">
+    <div class="tcs-card-title">인물 정보 <span class="tcs-card-en">BIOGRAPHY</span></div>
+    <div class="tcs-bio-grid">
+      <div class="tcs-bio-item">
+        <label class="tcs-label">출신 세계</label>
+        <input class="tcs-input writable" type="text" name="system.sophont.homeworld"
+          value="{{sophont.homeworld}}" {{#unless editable}}disabled{{/unless}}>
+      </div>
+      <div class="tcs-bio-item">
+        <label class="tcs-label">종</label>
+        <input class="tcs-input writable" type="text" name="system.sophont.species"
+          value="{{sophont.species}}" {{#unless editable}}disabled{{/unless}}>
+      </div>
+      <div class="tcs-bio-item">
+        <label class="tcs-label">나이</label>
+        <input class="tcs-input writable" type="number" name="system.sophont.age"
+          value="{{sophont.age}}" {{#unless editable}}disabled{{/unless}}>
+      </div>
+      <div class="tcs-bio-item">
+        <label class="tcs-label">성별</label>
+        <input class="tcs-input writable" type="text" name="system.sophont.gender"
+          value="{{sophont.gender}}" {{#unless editable}}disabled{{/unless}}>
+      </div>
+      <div class="tcs-bio-item">
+        <label class="tcs-label">키 (cm)</label>
+        <input class="tcs-input writable" type="number" name="system.sophont.height"
+          value="{{sophont.height}}" {{#unless editable}}disabled{{/unless}}>
+      </div>
+      <div class="tcs-bio-item">
+        <label class="tcs-label">몸무게 (kg)</label>
+        <input class="tcs-input writable" type="number" name="system.sophont.weight"
+          value="{{sophont.weight}}" {{#unless editable}}disabled{{/unless}}>
+      </div>
+    </div>
+    <div class="tcs-bio-item" style="margin-top:0.5rem">
+      <label class="tcs-label">직업 이력</label>
+      <input class="tcs-input writable" type="text" name="system.sophont.profession"
+        value="{{sophont.profession}}" {{#unless editable}}disabled{{/unless}}>
+    </div>
+  </div>
+
+  {{!-- 재정 --}}
+  <div class="tcs-card">
+    <div class="tcs-card-title">재정 <span class="tcs-card-en">FINANCE</span></div>
+    <div class="tcs-finance-grid">
+      <div class="tcs-finance-item">
+        <label class="tcs-label">현금 (Cr)</label>
+        <input class="tcs-input tcs-cash-input writable" type="text"
+          value="{{finance.cash}}" {{#unless editable}}disabled{{/unless}}>
+      </div>
+      <div class="tcs-finance-item">
+        <label class="tcs-label">연금 (Cr/년)</label>
+        <input class="tcs-input writable" type="number" name="system.finance.pension"
+          value="{{finance.pension}}" {{#unless editable}}disabled{{/unless}}>
+      </div>
+      <div class="tcs-finance-item">
+        <label class="tcs-label">의료 채무 (Cr)</label>
+        <input class="tcs-input writable" type="number" name="system.finance.medicalDebt"
+          value="{{finance.medicalDebt}}" {{#unless editable}}disabled{{/unless}}>
+      </div>
+      <div class="tcs-finance-item">
+        <label class="tcs-label">생활비 (Cr/월)</label>
+        <input class="tcs-input writable" type="number" name="system.finance.livingCosts"
+          value="{{finance.livingCosts}}" {{#unless editable}}disabled{{/unless}}>
+      </div>
+    </div>
+    {{#if finance.description}}
+    <div class="tcs-bio-item" style="margin-top:0.5rem">
+      <label class="tcs-label">재정 메모</label>
+      <div class="tcs-finance-note">{{finance.description}}</div>
+    </div>
+    {{/if}}
+  </div>
+
+  {{!-- 메모 --}}
+  <div class="tcs-card">
+    <div class="tcs-card-title">메모 <span class="tcs-card-en">NOTES</span></div>
+    <textarea class="tcs-textarea writable" name="system.description" rows="5"
+      {{#unless editable}}disabled{{/unless}}>{{system.description}}</textarea>
+  </div>
+
+  {{!-- 연줄 & 인맥 --}}
+  <div class="tcs-card" style="grid-column:1 / -1">
+    <div class="tcs-card-title" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>연줄 & 인맥 <span class="tcs-card-en">CONTACTS ({{associates.length}})</span></span>
+      {{#if editable}}
+        <button id="tcs-add-contact" class="tcs-add-btn" style="font-size:0.72rem;padding:0.15rem 0.5rem;">
+          <i class="fa fa-plus"></i> 추가
+        </button>
+      {{/if}}
+    </div>
+    {{#if associates.length}}
+      <div class="tcs-assoc-list">
+        {{#each associates}}
+          <div class="tcs-assoc-row" data-item-id="{{id}}">
+            <span class="tcs-assoc-type tcs-assoc-{{system.associate.relationship}}">
+              {{system.associate.relationship}}
+            </span>
+            <span class="tcs-assoc-name">{{name}}</span>
+            {{#if system.notes}}<span class="tcs-assoc-notes">{{system.notes}}</span>{{/if}}
+            {{#if ../editable}}
+              <button class="tcs-item-delete" title="삭제" style="margin-left:auto">✕</button>
+            {{/if}}
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="tcs-empty" style="padding:0.5rem 0;font-size:0.8rem;">연줄 없음</div>
+    {{/if}}
+  </div>
+
+</div>
