@@ -41,5 +41,18 @@
     "legal": "The Traveller game in all forms is owned by Mongoose Publishing. Copyright 1977-2024 Mongoose Publishing. Traveller is a registered trademark of Mongoose Publishing. Mongoose Publishing permits web sites and fanzines for this game, provided it contains this notice, that Mongoose Publishing is notified, and subject to a withdrawal of permission on 90 days notice. The contents of this site are for personal, non-commercial use only."
   },
   "url": "https://github.com/foredayner/traveller-sheet-KR",
-  "license": "Mongoose Fair Use"
+  "license": "Mongoose Fair Use",
+  "manifest": "https://github.com/foredayner/traveller-sheet-KR/releases/latest/download/module.json",
+  "download": "https://github.com/foredayner/traveller-sheet-KR/releases/latest/download/traveller-sheet-KR.zip",
+  "readme": "https://github.com/foredayner/traveller-sheet-KR/blob/main/README.md",
+  "changelog": "https://github.com/foredayner/traveller-sheet-KR/blob/main/CHANGELOG.md",
+  "bugs": "https://github.com/foredayner/traveller-sheet-KR/issues",
+  "keywords": [
+    "traveller",
+    "mgt2e",
+    "character-sheet",
+    "korean",
+    "트래블러",
+    "캐릭터시트"
+  ]
 }
