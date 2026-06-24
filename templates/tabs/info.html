@@ -159,4 +159,21 @@
     {{/if}}
   </div>
 
+  {{!-- 경력 요약 --}}
+  {{#if careerTimeline.length}}
+  <div class="tcs-card">
+    <div class="tcs-card-title">경력 요약 <span class="tcs-card-en">CAREER SUMMARY</span></div>
+    <div style="font-size:0.82rem;line-height:1.8;">
+      {{#each careerTimeline}}
+      {{#if this.isTerm}}
+      <div style="display:flex;gap:0.5rem;align-items:center;">
+        <span style="color:{{#if this.survived}}var(--tcs-green){{else}}var(--tcs-red){{/if}}">{{#if this.survived}}●{{else}}✕{{/if}}</span>
+        <span style="color:var(--tcs-text);">{{this.label}}</span>
+      </div>
+      {{/if}}
+      {{/each}}
+    </div>
+  </div>
+  {{/if}}
+
 </div>

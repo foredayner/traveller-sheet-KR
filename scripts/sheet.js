@@ -565,6 +565,38 @@ export class TravellerChargenSheet extends _ActorSheet {
       notes:   t.system?.notes ?? '',
     }))
 
+    // 경력 타임라인 로그 (wizard에서 export된 flag)
+    const careerLog  = this.actor.getFlag('traveller-sheet-KR', 'careerLog') ?? []
+    const careersRaw = this.actor.getFlag('traveller-sheet-KR', 'careers')   ?? []
+
+    // careerLog(교육/특수 이벤트) + 주기별 careers log를 시간순으로 합산
+    const timeline = []
+
+    // 1. 교육 로그 (careerLog에서 phase==='education')
+    for (const entry of careerLog) {
+      timeline.push({
+        phase:   entry.phase,
+        label:   entry.label,
+        entries: entry.entries ?? [],
+        isEducation: entry.phase === 'education',
+      })
+    }
+
+    // 2. 경력 주기별 로그
+    for (const c of careersRaw) {
+      const careerName = c.careerId ?? '알 수 없음'
+      const specId     = c.specialtyId ?? ''
+      timeline.push({
+        phase:    'term',
+        label:    `${c.term ?? '?'}주기 — ${careerName}${specId ? ' / ' + specId : ''}${c.isOfficer ? ' (장교)' : ''} | 직급 ${c.rank ?? 0}`,
+        entries:  c.log ?? [],
+        isTerm:   true,
+        survived: c.survived ?? true,
+      })
+    }
+
+    ctx.careerTimeline = timeline
+
     // 장착 중인 방어구 합산 (+ 이식형 방어구 보너스)
     ctx.totalProtection = ctx.armours
       .filter(a => a.system.worn)
