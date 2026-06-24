@@ -40,7 +40,7 @@ export function parseArmourSkillReq(str = '') {
 
 // 장착/이식된 아이템이 부여 중인 보너스를 짧은 문자열로 표시
 function grantLabel(item) {
-  const grant = item.getFlag?.('traveller-chargen-sheet', 'grant')
+  const grant = item.getFlag?.('traveller-sheet-KR', 'grant')
   if (!grant) return null
   const parts = []
   for (const k of ['STR','DEX','END','INT','EDU','SOC']) if (grant[k]) parts.push(`${k}+${grant[k]}`)
@@ -269,7 +269,7 @@ async function executeRoll(actor, opts) {
   const chaVal = actor.system.characteristics?.[cha]?.value ?? 0
   const chaDM  = calcDM(chaVal)
   const sv     = skillVal >= 0 ? skillVal : -3
-  const armourPenalty = actor.getFlag('traveller-chargen-sheet', 'armourPenalty') ?? 0
+  const armourPenalty = actor.getFlag('traveller-sheet-KR', 'armourPenalty') ?? 0
   const totalDM = chaDM + sv + dm + armourPenalty
 
   let formula
@@ -319,8 +319,8 @@ export class TravellerChargenSheet extends _ActorSheet {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes:  ['traveller-chargen-sheet'],
-      template: 'modules/traveller-chargen-sheet/templates/sheet.html',
+      classes:  ['traveller-sheet-KR'],
+      template: 'modules/traveller-sheet-KR/templates/sheet.html',
       width:    860,
       height:   720,
       resizable: true,
@@ -333,7 +333,7 @@ export class TravellerChargenSheet extends _ActorSheet {
   }
 
   get template() {
-    return 'modules/traveller-chargen-sheet/templates/sheet.html'
+    return 'modules/traveller-sheet-KR/templates/sheet.html'
   }
 
   // Enter 키 / 입력칸 change 시 폼 전체 자동제출 방지
@@ -393,11 +393,11 @@ export class TravellerChargenSheet extends _ActorSheet {
       }
     }
     ctx.protectionBonus = protectionBonus
-    ctx.armourPenalty = this.actor.getFlag('traveller-chargen-sheet', 'armourPenalty') ?? 0
+    ctx.armourPenalty = this.actor.getFlag('traveller-sheet-KR', 'armourPenalty') ?? 0
 
     // 배경/관계/메모 (백스토리 탭)
-    ctx.backstoryRelationships = this.actor.getFlag('traveller-chargen-sheet', 'backstoryRelationships') ?? ''
-    ctx.backstoryNotes         = this.actor.getFlag('traveller-chargen-sheet', 'backstoryNotes') ?? ''
+    ctx.backstoryRelationships = this.actor.getFlag('traveller-sheet-KR', 'backstoryRelationships') ?? ''
+    ctx.backstoryNotes         = this.actor.getFlag('traveller-sheet-KR', 'backstoryNotes') ?? ''
 
     // 특성치 — mgt2e가 prepareDerivedData에서 .current/.dm을 이미 계산해줌
     // (augment 필드에는 ActiveEffect의 chaAug 보너스도 합산되어 들어있음)
@@ -575,7 +575,7 @@ export class TravellerChargenSheet extends _ActorSheet {
     ctx.totalWeight = items.reduce((s, i) =>
       s + (i.system?.weight ?? 0) * (i.system?.quantity ?? 1), 0)
 
-    ctx.shopAvailable = game.modules.get('traveller-chargen-items')?.active ?? false
+    ctx.shopAvailable = game.modules.get('traveller-items-KR')?.active ?? false
 
     return ctx
   }
@@ -726,10 +726,10 @@ export class TravellerChargenSheet extends _ActorSheet {
     // 장착 시 system.characteristics.X.augment / 컴퓨터 기능에 직접 가감한다.
     // 배경/관계/메모 (백스토리 탭) — flag로 저장
     html.on('change', '.tcs-backstory-relationships', ev => {
-      this.actor.setFlag('traveller-chargen-sheet', 'backstoryRelationships', ev.currentTarget.value)
+      this.actor.setFlag('traveller-sheet-KR', 'backstoryRelationships', ev.currentTarget.value)
     })
     html.on('change', '.tcs-backstory-notes', ev => {
-      this.actor.setFlag('traveller-chargen-sheet', 'backstoryNotes', ev.currentTarget.value)
+      this.actor.setFlag('traveller-sheet-KR', 'backstoryNotes', ev.currentTarget.value)
     })
 
     // 또한 방어구의 "요구 기능"(system.armour.skill) 대비 부족한 만큼
@@ -748,7 +748,7 @@ export class TravellerChargenSheet extends _ActorSheet {
         // "STR, DEX 또는 END 중 하나 +N" 같은 선택형 보너스 처리
         const choiceM = (item.system?.notes ?? '').match(/중\s*하나\s*\+(\d+)/)
         if (choiceM) {
-          const choice = item.getFlag('traveller-chargen-sheet', 'augChoice')
+          const choice = item.getFlag('traveller-sheet-KR', 'augChoice')
           if (!['STR','DEX','END'].includes(choice)) {
             ui.notifications.warn(`"${item.name}"의 보너스를 받을 특성치를 먼저 선택해주세요 (아이템 시트에서 설정).`)
             return
@@ -772,7 +772,7 @@ export class TravellerChargenSheet extends _ActorSheet {
         // "기능 강화 이식" 등 — 선택한 기능에 레벨 +N
         const skillM = (item.system?.notes ?? '').match(/하나의\s*기능에\s*레벨\s*\+(\d+)\s*향상/)
         if (skillM) {
-          const skKey = item.getFlag('traveller-chargen-sheet', 'augChoiceSkill')
+          const skKey = item.getFlag('traveller-sheet-KR', 'augChoiceSkill')
           if (!skKey) {
             ui.notifications.warn(`"${item.name}"의 보너스를 받을 기능을 먼저 선택해주세요 (아이템 시트에서 설정).`)
             return
@@ -794,14 +794,14 @@ export class TravellerChargenSheet extends _ActorSheet {
             const penalty = actorLevel === null ? -3 : Math.min(0, actorLevel - req.level)
             if (penalty < 0) {
               grant.armourPenalty = penalty
-              charUpdates['flags.traveller-chargen-sheet.armourPenalty'] =
-                (this.actor.getFlag('traveller-chargen-sheet', 'armourPenalty') ?? 0) + penalty
+              charUpdates['flags.traveller-sheet-KR.armourPenalty'] =
+                (this.actor.getFlag('traveller-sheet-KR', 'armourPenalty') ?? 0) + penalty
             }
           }
         }
-        await item.setFlag('traveller-chargen-sheet', 'grant', grant)
+        await item.setFlag('traveller-sheet-KR', 'grant', grant)
       } else {
-        const grant = item.getFlag('traveller-chargen-sheet', 'grant') ?? {}
+        const grant = item.getFlag('traveller-sheet-KR', 'grant') ?? {}
         for (const k of ['STR','DEX','END','INT','EDU','SOC']) {
           if (grant[k]) charUpdates[`system.characteristics.${k}.augment`] = (sys.characteristics?.[k]?.augment ?? 0) - grant[k]
         }
@@ -811,15 +811,15 @@ export class TravellerChargenSheet extends _ActorSheet {
             : { value: grant.computerPrev, trained: true }
         }
         if (grant.armourPenalty) {
-          charUpdates['flags.traveller-chargen-sheet.armourPenalty'] =
-            (this.actor.getFlag('traveller-chargen-sheet', 'armourPenalty') ?? 0) - grant.armourPenalty
+          charUpdates['flags.traveller-sheet-KR.armourPenalty'] =
+            (this.actor.getFlag('traveller-sheet-KR', 'armourPenalty') ?? 0) - grant.armourPenalty
         }
         if (grant.skillChoice) {
           const { key, prevTrained, prevValue } = grant.skillChoice
           charUpdates[`system.skills.${key}.value`]   = prevValue
           charUpdates[`system.skills.${key}.trained`] = prevTrained
         }
-        await item.unsetFlag('traveller-chargen-sheet', 'grant')
+        await item.unsetFlag('traveller-sheet-KR', 'grant')
       }
 
       await item.update({ [field]: turnOn })
@@ -996,12 +996,12 @@ export class TravellerChargenSheet extends _ActorSheet {
     }
 
     const PACKS = [
-      'traveller-chargen-items.armour',
-      'traveller-chargen-items.weapons-melee',
-      'traveller-chargen-items.weapons-ranged',
-      'traveller-chargen-items.weapons-heavy',
-      'traveller-chargen-items.equipment',
-      'traveller-chargen-items.augments',
+      'traveller-items-KR.armour',
+      'traveller-items-KR.weapons-melee',
+      'traveller-items-KR.weapons-ranged',
+      'traveller-items-KR.weapons-heavy',
+      'traveller-items-KR.equipment',
+      'traveller-items-KR.augments',
     ]
 
     const results = await Promise.all(PACKS.map(async packId => {

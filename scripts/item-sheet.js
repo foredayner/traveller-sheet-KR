@@ -18,7 +18,7 @@ export class TcsItemSheet extends _ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['tcs-item-sheet'],
-      template: 'modules/traveller-chargen-sheet/templates/item-sheet.html',
+      template: 'modules/traveller-sheet-KR/templates/item-sheet.html',
       width: 480,
       height: 'auto',
       resizable: true,
@@ -62,7 +62,7 @@ export class TcsItemSheet extends _ItemSheet {
       const lines = []
       const choiceM = notes.match(/중\s*하나\s*\+(\d+)/)
       if (choiceM) {
-        const choice = this.item.getFlag('traveller-chargen-sheet', 'augChoice')
+        const choice = this.item.getFlag('traveller-sheet-KR', 'augChoice')
         lines.push(choice
           ? `${choice} +${choiceM[1]} (선택됨)`
           : `STR/DEX/END 중 하나 +${choiceM[1]} (아래에서 선택 필요)`)
@@ -75,7 +75,7 @@ export class TcsItemSheet extends _ItemSheet {
       // "기능 강화 이식" 등 — 하나의 기능에 레벨 +N 향상 (플레이어 선택)
       const skillM = notes.match(/하나의\s*기능에\s*레벨\s*\+(\d+)\s*향상/)
       if (skillM) {
-        const choice = this.item.getFlag('traveller-chargen-sheet', 'augChoiceSkill')
+        const choice = this.item.getFlag('traveller-sheet-KR', 'augChoiceSkill')
         ctx.isSkillChoiceAug = true
         ctx.skillChoiceVal   = skillM[1]
         ctx.augChoiceSkill   = choice ?? ''
@@ -106,11 +106,11 @@ export class TcsItemSheet extends _ItemSheet {
 
     // 신체 강화류: STR/DEX/END 선택
     html.on('change', '.tcs-aug-choice', ev => {
-      this.item.setFlag('traveller-chargen-sheet', 'augChoice', ev.currentTarget.value)
+      this.item.setFlag('traveller-sheet-KR', 'augChoice', ev.currentTarget.value)
     })
     // 기능 강화 이식: 기능 선택
     html.on('change', '.tcs-aug-choice-skill', ev => {
-      this.item.setFlag('traveller-chargen-sheet', 'augChoiceSkill', ev.currentTarget.value)
+      this.item.setFlag('traveller-sheet-KR', 'augChoiceSkill', ev.currentTarget.value)
     })
 
     // ── 무기 특성 태그 편집 ──────────────────────────────
